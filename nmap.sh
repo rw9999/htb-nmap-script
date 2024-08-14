@@ -15,7 +15,7 @@ read -p "Enter file name: " filename
 
 echo "Scanning open TCP ports"
 
-nmap -p- -T5  $ip | tee -a "$filename"  
+nmap -p- --min-rate=2000  $ip | tee -a "$filename"  
 
 while read line
 do
@@ -32,7 +32,7 @@ nmap -p $tcpPorts -sC -sV $ip
 
 echo "Scanning open UDP ports"
 
-nmap -T5 -sU $ip | tee -a "$filename"
+nmap --min-rate=1000 -sU $ip | tee -a "$filename"
 
 while read line
 do
