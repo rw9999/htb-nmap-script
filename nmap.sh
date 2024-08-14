@@ -28,7 +28,7 @@ done < "$filename"
 
 echo "Scanning protocols and versions on open TCP ports"
 
-nmap -p $tcpPorts -sC -sV $ip
+nmap -p $tcpPorts -sC -sV $ip | tee -a "$filename"  
 
 echo "Scanning open UDP ports"
 
@@ -44,4 +44,4 @@ do
 done < "$filename"
 
 echo "Scanning protocols and versions on open UDP ports"
-nmap -p $udpPorts -sU -sC -sV $ip
+nmap -p $udpPorts -sU -sC -sV $ip | tee -a "$filename"  
