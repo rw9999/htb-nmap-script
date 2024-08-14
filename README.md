@@ -1,1 +1,1 @@
-Scan open TCP and UDP ports and outputs results into a file.
+Scan open TCP and UDP ports and outputs the results into a file.
