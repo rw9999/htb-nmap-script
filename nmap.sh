@@ -1,26 +1,34 @@
 #! /bin/bash
 
+if [ -z "$1" ]; then
+        echo "Please provide ip address"
+        exit 1
+fi
+
 ip="${1}"
-portL=""
+tcpPorts=""
+udpPorts=""
 
 read -p "Enter file name: " filename
+
+> "$filename"
+
 echo "Scanning open TCP ports"
+
 nmap -p- -T5  $ip | tee -a "$filename"  
 
 while read line
 do
         if [[ ${line:0:1} =~ [0-9] ]]
         then
-                portL="${portL}${line%%/*},"
+                tcpPorts="${tcpPorts}${line%%/*},"
         fi
 
 done < "$filename"
 
 echo "Scanning protocols and versions on open TCP ports"
 
-nmap -p $portL -sC -sV $ip
-
-portL=""
+nmap -p $tcpPorts -sC -sV $ip
 
 echo "Scanning open UDP ports"
 
@@ -30,10 +38,10 @@ while read line
 do
         if [[ ${line:0:1} =~ [0-9] ]]
         then
-                portL="${portL}${line%%/*},"
+                udpPorts="${udpPorts}${line%%/*},"
         fi
 
 done < "$filename"
 
 echo "Scanning protocols and versions on open UDP ports"
-nmap -p $portL -sU -sC -sV $ip
+nmap -p $udpPorts -sU -sC -sV $ip
