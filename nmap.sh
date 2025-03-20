@@ -1,6 +1,6 @@
 #! /bin/bash
 
-#checks if ip was enter in cli
+#checks if ip was entered in cli
 if [ -z "$1" ]; then
         echo "Please provide ip address"
         exit 1
@@ -14,7 +14,7 @@ udpPorts=""
 #asks for file name
 read -p "Enter file name: " filename
 
-#creates file or overwrites if is exists
+#creates file or overwrites if it exists
 > "$filename"
 
 echo "Scanning open TCP ports"
@@ -34,7 +34,7 @@ done < "$filename"
 
 echo "Scanning protocols and versions on open TCP ports"
 
-#does udp ports
+#scans udp ports
 nmap -p $tcpPorts -sC -sV $ip | tee -a "$filename"  
 
 echo "Scanning open UDP ports"
